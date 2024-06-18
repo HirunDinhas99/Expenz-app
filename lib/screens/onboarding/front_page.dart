@@ -11,7 +11,7 @@ class FrontPage extends StatelessWidget {
       children: [
         Image.asset(
           "assets/images/logo.png",
-          width: 100,
+          width: 131,
           fit: BoxFit.cover,
         ),
         SizedBox(
@@ -21,7 +21,7 @@ class FrontPage extends StatelessWidget {
           child: Text(
             "Expenz",
             style: TextStyle(
-                fontSize: 40, color: kMainColor, fontWeight: FontWeight.bold),
+                fontSize: 56, color: kMainColor, fontWeight: FontWeight.bold),
           ),
         ),
       ],

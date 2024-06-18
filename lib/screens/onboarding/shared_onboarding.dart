@@ -23,7 +23,7 @@ class SharedOnboardingScreen extends StatelessWidget {
         children: [
           Image.asset(
             imgPath,
-            width: 300,
+            width: 312,
             fit: BoxFit.cover,
           ),
           SizedBox(
@@ -32,7 +32,7 @@ class SharedOnboardingScreen extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 28,
+              fontSize: 32,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,

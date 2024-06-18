@@ -3,7 +3,7 @@ import 'package:expenz_app/models/onboarding_model.dart';
 class OnbardingData {
   static final List<Onboarding> onboardingList = [
     Onboarding(
-      title: "Gain total control of your\nmoney",
+      title: "Gain total control of your money",
       imagePath: "assets/images/onboard_1.png",
       description: "Become your own money manager and make every cent count",
     ),
