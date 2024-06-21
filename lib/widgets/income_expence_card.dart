@@ -56,7 +56,7 @@ class _IncomeExpenceCardState extends State<IncomeExpenceCard> {
                   widget.title,
                   style: TextStyle(
                     color: kWhite,
-                    fontSize: 17,
+                    fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

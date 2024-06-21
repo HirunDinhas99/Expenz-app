@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(kDefalutPadding),
+                padding: EdgeInsets.all(kDefalutPadding),
                 child: Column(
                   children: [
                     SizedBox(
