@@ -2,8 +2,10 @@ import 'package:expenz_app/constants/colors.dart';
 import 'package:expenz_app/constants/constants.dart';
 import 'package:expenz_app/models/expenses_model.dart';
 import 'package:expenz_app/models/income_model.dart';
+import 'package:expenz_app/widgets/custom_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AddNewPage extends StatefulWidget {
   const AddNewPage({super.key});
@@ -21,6 +23,8 @@ class _AddNewPageState extends State<AddNewPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
+  DateTime _selectedTime = DateTime.now();
 
   @override
   void dispose() {
@@ -126,14 +130,15 @@ class _AddNewPageState extends State<AddNewPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "How much?",
+                          "How Much?",
                           style: TextStyle(
                             color: kLightGrey.withOpacity(0.8),
                             fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         TextField(
+                          keyboardType: TextInputType.number,
                           style: TextStyle(
                             fontSize: 64,
                             color: kWhite,
@@ -155,7 +160,7 @@ class _AddNewPageState extends State<AddNewPage> {
                 ),
                 //user data form
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.65,
                   margin: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.3),
                   decoration: BoxDecoration(
@@ -254,6 +259,151 @@ class _AddNewPageState extends State<AddNewPage> {
                                 horizontal: 20,
                               ),
                             ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          //date picker
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2020),
+                                    lastDate: DateTime(2025),
+                                  ).then((value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        _selectedDate = value;
+                                      });
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: kMainColor,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 25, vertical: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.calendar_month_outlined,
+                                          color: kWhite,
+                                          size: 30,
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Text(
+                                          "Select Date",
+                                          style: TextStyle(
+                                            color: kWhite,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                DateFormat.yMMMMd().format(_selectedDate),
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: kGrey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 15),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  ).then((value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        _selectedTime = DateTime(
+                                          _selectedDate.year,
+                                          _selectedDate.month,
+                                          _selectedDate.day,
+                                          value.hour,
+                                          value.minute,
+                                        );
+                                      });
+                                    }
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: kYellow,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 25, vertical: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.watch_later_outlined,
+                                          color: kWhite,
+                                          size: 30,
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Text(
+                                          "Select Time",
+                                          style: TextStyle(
+                                            color: kWhite,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                DateFormat.jm().format(_selectedTime),
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                  color: kGrey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          Divider(
+                            color: kLightGrey,
+                            thickness: 5,
+                          ),
+                          SizedBox(height: 20),
+                          CustomButton(
+                            btName: "Add",
+                            btColor: _selectedMethod == 0 ? kRed : kGreen,
                           ),
                         ],
                       ),
