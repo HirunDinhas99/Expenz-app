@@ -405,6 +405,7 @@ class _AddNewPageState extends State<AddNewPage> {
                             btName: "Add",
                             btColor: _selectedMethod == 0 ? kRed : kGreen,
                           ),
+                          
                         ],
                       ),
                     ),
