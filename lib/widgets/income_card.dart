@@ -25,7 +25,7 @@ class IncomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: kWhite,
         borderRadius: BorderRadius.circular(24),
@@ -91,7 +91,7 @@ class IncomeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                "+\$${amount.toStringAsFixed(2)}",
+                "+\$${amount.toStringAsFixed(1)}",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

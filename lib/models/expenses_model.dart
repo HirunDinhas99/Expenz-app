@@ -23,7 +23,7 @@ final Map<ExpenseCategory, Color> expenseCategoryColors = {
   ExpenseCategory.transport: const Color(0xFF64B5F6),
   ExpenseCategory.health: const Color(0xFFE57373),
   ExpenseCategory.shopping: const Color(0xFFFFD54F),
-  ExpenseCategory.subscription: Color.fromARGB(255, 169, 125, 245),
+  ExpenseCategory.subscription: const Color.fromARGB(255, 169, 125, 245),
 };
 
 final class Expense {

@@ -1,11 +1,18 @@
 import 'package:expenz_app/constants/colors.dart';
 import 'package:expenz_app/constants/constants.dart';
+import 'package:expenz_app/models/expenses_model.dart';
+import 'package:expenz_app/models/income_model.dart';
 import 'package:expenz_app/services/user_services.dart';
+import 'package:expenz_app/widgets/expense_card.dart';
 import 'package:expenz_app/widgets/income_expence_card.dart';
+import 'package:expenz_app/widgets/my_line_chart.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final List<Expense> expensesList;
+  final List<Income> incomeList;
+  const HomeScreen(
+      {super.key, required this.expensesList, required this.incomeList});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -13,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String userName = "";
+  double expenseTotal = 0;
+  double incomeTotal = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -23,6 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     });
+    setState(() {
+      //total amount of expenses
+      for (var i = 0; i < widget.expensesList.length; i++) {
+        expenseTotal += widget.expensesList[i].amount;
+      }
+
+      for (var k = 0; k < widget.incomeList.length; k++) {
+        incomeTotal += widget.incomeList[k].amount;
+      }
+    });
     super.initState();
   }
 
@@ -31,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               height: MediaQuery.of(context).size.height * 0.37,
@@ -93,13 +113,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         IncomeExpenceCard(
                           title: "Income",
-                          amount: 5000,
+                          amount: incomeTotal,
                           imgUrl: "assets/images/income.png",
                           bgColor: Color(0xff00A86B),
                         ),
                         IncomeExpenceCard(
                           title: "Expenses",
-                          amount: 1200,
+                          amount: expenseTotal,
                           imgUrl: "assets/images/expense.png",
                           bgColor: Color(0xffFD3C4A),
                         ),
@@ -107,6 +127,84 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(kDefalutPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Spend Frequency",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  LineChartSample(),
+                  SizedBox(height: 10),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Recent Transaction",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      widget.expensesList.isEmpty
+                          ? Text(
+                              "No Expenses You Added. Add Some Expenses",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: kRed,
+                              ),
+                            )
+                          : SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              child: SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      ListView.builder(
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: widget.expensesList.length,
+                                        itemBuilder: (context, index) {
+                                          final expense =
+                                              widget.expensesList[index];
+                                          return ExpenseCard(
+                                            title: expense.title,
+                                            amount: expense.amount,
+                                            category: expense.category,
+                                            date: expense.date,
+                                            time: expense.time,
+                                            description: expense.description,
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
