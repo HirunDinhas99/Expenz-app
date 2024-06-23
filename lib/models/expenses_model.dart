@@ -20,10 +20,10 @@ final Map<ExpenseCategory, String> expenseCategoryImages = {
 //category colors
 final Map<ExpenseCategory, Color> expenseCategoryColors = {
   ExpenseCategory.food: const Color(0xFFE57373),
-  ExpenseCategory.transport: const Color(0xFF81C784),
-  ExpenseCategory.health: const Color(0xFF64B5F6),
+  ExpenseCategory.transport: const Color(0xFF64B5F6),
+  ExpenseCategory.health: const Color(0xFFE57373),
   ExpenseCategory.shopping: const Color(0xFFFFD54F),
-  ExpenseCategory.subscription: const Color(0xFF9575CD),
+  ExpenseCategory.subscription: Color.fromARGB(255, 169, 125, 245),
 };
 
 final class Expense {
