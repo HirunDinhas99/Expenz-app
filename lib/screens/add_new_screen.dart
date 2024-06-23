@@ -2,13 +2,18 @@ import 'package:expenz_app/constants/colors.dart';
 import 'package:expenz_app/constants/constants.dart';
 import 'package:expenz_app/models/expenses_model.dart';
 import 'package:expenz_app/models/income_model.dart';
+import 'package:expenz_app/services/expense_service.dart';
+import 'package:expenz_app/services/income_sevice.dart';
 import 'package:expenz_app/widgets/custom_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AddNewPage extends StatefulWidget {
-  const AddNewPage({super.key});
+  final Function(Expense) addExpense;
+  final Function(Income) addIcome;
+  const AddNewPage(
+      {super.key, required this.addExpense, required this.addIcome});
 
   @override
   State<AddNewPage> createState() => _AddNewPageState();
@@ -401,11 +406,57 @@ class _AddNewPageState extends State<AddNewPage> {
                             thickness: 5,
                           ),
                           SizedBox(height: 20),
-                          CustomButton(
-                            btName: "Add",
-                            btColor: _selectedMethod == 0 ? kRed : kGreen,
+
+                          GestureDetector(
+                            onTap: () async {
+                              if (_selectedMethod == 0) {
+                                List<Expense> loadedExpenses =
+                                    await ExpenseService().loadExpenses();
+
+                                Expense expense = Expense(
+                                  id: loadedExpenses.length + 1,
+                                  title: _titleController.text,
+                                  amount: _amountController.text.isEmpty
+                                      ? 0
+                                      : double.parse(_amountController.text),
+                                  category: _expenseCategory,
+                                  date: _selectedDate,
+                                  time: _selectedTime,
+                                  description: _descriptionController.text,
+                                );
+                                widget.addExpense(expense);
+                                _titleController.clear();
+                                _descriptionController.clear();
+                                _amountController.clear();
+                              } else {
+                                // Assuming a method to load income
+                                List<Income> loadedIncome =
+                                    await IncomeServices().loadIncomes();
+                                Income income = Income(
+                                  id: loadedIncome.length +
+                                      1, // Calculate ID based on loaded income
+                                  title: _titleController.text,
+                                  amount: _amountController.text.isEmpty
+                                      ? 0
+                                      : double.parse(_amountController.text),
+                                  category: _incomeCategory,
+                                  date: _selectedDate,
+                                  time: _selectedTime,
+                                  description: _descriptionController.text,
+                                );
+
+                                //add income to the list
+                                widget.addIcome(income);
+                                _titleController.clear();
+                                _descriptionController.clear();
+                                _amountController.clear();
+                              }
+                            },
+                            child: CustomButton(
+                              btName: "Add",
+                              btColor: _selectedMethod == 0 ? kRed : kGreen,
+                            ),
                           ),
-                          
                         ],
                       ),
                     ),

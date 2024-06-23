@@ -42,7 +42,7 @@ final class Income {
     required this.description,
   });
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJSON() {
     return {
       'id': id,
       'title': title,
@@ -55,7 +55,7 @@ final class Income {
   }
 
   // Create an Expense object from a JSON object
-  factory Income.fromJson(Map<String, dynamic> json) {
+  factory Income.fromJSON(Map<String, dynamic> json) {
     return Income(
       id: json['id'],
       title: json['title'],
