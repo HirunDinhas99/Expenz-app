@@ -68,6 +68,14 @@ class _MainScreenState extends State<MainScreen> {
       expenseList.remove(expense);
     });
   }
+  //functin remove Income
+
+  void removeIncome(Income income) {
+    IncomeServices().deleteIncome(income.id, context);
+    setState(() {
+      incomesList.remove(income);
+    });
+  }
 
   @override
   void initState() {
@@ -85,6 +93,8 @@ class _MainScreenState extends State<MainScreen> {
       Transaction(
         expensesList: expenseList,
         onDismissedExpense: removeExpense,
+        incomeList: incomesList,
+        onDismissedIncome: removeIncome,
       ),
       HomeScreen(),
       AddNewPage(
